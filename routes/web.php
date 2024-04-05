@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Post;
@@ -12,21 +13,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/posts', function () {
-        return view('posts.index');
-    })->name('posts.index');
-
-    Route::post('/posts', function () {
-
-            Post::create([
-            'message'=> request('message'),
-            'user_id'=> auth()->user()->id,
-            ]);
-
-            //session()->flash('status', '¡Post creado correctamente!');
-            return to_route('posts.index')
-            ->with('status',__('Post created successfully!'));
-    });
+    Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+    Route::post('/posts', [PostController::class,'store'])->name('posts.store');
 });
 
 require __DIR__.'/auth.php';

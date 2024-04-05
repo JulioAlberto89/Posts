@@ -10,7 +10,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
-                    <form action="" method="POST">
+                    <form action="{{route('posts.store')}}" method="POST">
                         @csrf
                         <textarea class="bg-transparent border border-gray-300 rounded-lg p-4 w-full
                          resize-none" name="message" id="" cols="30" rows="5"

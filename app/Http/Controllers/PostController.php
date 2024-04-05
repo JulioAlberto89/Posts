@@ -12,7 +12,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        return view('posts.index');
     }
 
     /**
@@ -20,7 +20,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -28,7 +28,14 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Post::create([
+            'message'=> $request->get('message'),
+            'user_id'=> auth()->user()->id,
+            ]);
+
+            //session()->flash('status', '¡Post creado correctamente!');
+            return to_route('posts.index')
+            ->with('status',__('Post created successfully!'));
     }
 
     /**
