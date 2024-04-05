@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -12,7 +13,13 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('posts.index');
+        return view('posts.index', [
+            //'posts' => Post::orderBy('created_at', 'desc')->get()
+            //Esto es para precargar el usuario y consumir menos tiempo
+            //De lo contrario (llamando directamente al lastest sin el with)
+            //se hacía una consulta por cada post
+            'posts' => Post::with('user')->latest()->get()
+        ]);
     }
 
     /**
@@ -28,18 +35,28 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'message'=> ['required', 'min:3', 'max:1000'],
         ]);
 
-        Post::create([
-            'message'=> $request->get('message'),
-            'user_id'=> auth()->user()->id,
-            ]);
+        $request ->user()->posts()->create($validated);
 
-            //session()->flash('status', '¡Post creado correctamente!');
-            return to_route('posts.index')
-            ->with('status',__('Post created successfully!'));
+        // Obtener el usuario autenticado
+        // $user = auth()->user();
+
+        // // Crear un nuevo post asociado con el usuario
+        // $post = $user->posts()->create([
+        //     'message' => $validated['message'],
+        // ]);
+
+        //Otra opción
+        // $request->user()->posts->create([
+        //     'message'=> $request->get('message'),
+        // ]);
+
+        //session()->flash('status', '¡Post creado correctamente!');
+        return to_route('posts.index')
+        ->with('status',__('Post created successfully!'));
     }
 
     /**
