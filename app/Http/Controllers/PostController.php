@@ -28,6 +28,10 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'message'=> ['required', 'min:3', 'max:1000'],
+        ]);
+
         Post::create([
             'message'=> $request->get('message'),
             'user_id'=> auth()->user()->id,
