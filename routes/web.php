@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Models\Post;
 
 Route::view('/', 'welcome')->name('welcome');
 
@@ -16,7 +17,15 @@ Route::middleware('auth')->group(function () {
     })->name('posts.index');
 
     Route::post('/posts', function () {
-        return Request('message');
+
+            Post::create([
+            'message'=> request('message'),
+            'user_id'=> auth()->user()->id,
+            ]);
+
+            //session()->flash('status', '¡Post creado correctamente!');
+            return to_route('posts.index')
+            ->with('status',__('Post created successfully!'));
     });
 });
 
