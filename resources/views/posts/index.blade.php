@@ -45,7 +45,7 @@
                         </div>
                         <p class="mt-4 text-lg text-gray-900 dark:text-gray-100">{{ $post->message}}</p>
                       </div>
-                      @if (auth()->user()->id === $post->user_id)
+                      @can('update', $post)
                         <x-dropdown>
                             <x-slot name="trigger">
                                 <button><svg class="w-5 h-5 text-gray-500 dark:text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -54,11 +54,22 @@
                                 </button>
                             </x-slot>
                             <x-slot name="content">
-                                <x-dropdown-link :href="route('posts.edit', $post)">{{__('Edit Post')}}
+                                <x-dropdown-link :href="route('posts.edit', $post)">
+                                    {{__('Edit Post')}}
                                 </x-dropdown-link>
+                                <form method="POST" action="{{route('posts.destroy', $post)}}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <x-dropdown-link :href="route('posts.destroy', $post)" onclick="event.preventDefault(); this.closest('form').submit();">
+                                        {{__('Delete Post')}}
+                                    </x-dropdown-link>
+                                </form>
                             </x-slot>
                         </x-dropdown>
-                      @endif
+                        @endcan
+                        <!-- Otra opción-->
+                        {{--@if (auth()->user()->id === $post->user_id)
+                      @endif--}}
                       <!-- Otra opción-->
                       {{--@if (auth()->user()->is($post->user))
                       @endif--}}

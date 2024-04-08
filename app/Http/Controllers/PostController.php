@@ -74,6 +74,7 @@ class PostController extends Controller
     public function edit(Post $post)
     {
 
+        //$this->authorize('update', $post);
         if(auth()->user()->id !== $post->user_id){
             abort(403);
         }
@@ -106,6 +107,11 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        if(auth()->user()->id !== $post->user_id){
+            abort(403);
+        }
+        $post->delete();
+
+        return to_route('posts.index')->with('status',__('Post deleted succesfully!'));
     }
 }

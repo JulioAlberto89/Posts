@@ -257,7 +257,9 @@
     "Post created successfully!" : "¡Post creado correctamente!",
     "Edit Posts" : "Editar Posts",
     "Edit Post" : "Editar Post",
-    "Post updated succesfully!" : "Post actualizado exitosamente!",
+    "Post updated succesfully!" : "¡Post actualizado exitosamente!",
     "Edited" : "Editado",
-    "edited" : "editado"
+    "edited" : "editado",
+    "Delete Post" : "Borrar Post",
+    "Post deleted succesfully!" : "¡Post eliminado existosamente!"
 }
