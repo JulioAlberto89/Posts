@@ -38,6 +38,9 @@
                             <div>
                                 <span class="text-gray-800 dark:text-gray-200">{{$post->user->name}}</span>
                                 <small class="ml-2 text-sm text-gray-600 dark:text-gray-400">{{$post->created_at->diffForHumans()}}</small>
+                                @if ($post->created_at != $post->updated_at)
+                                    <small class="text-sm text-gray-600 dark:text-gray-400"> &middot; {{ __('edited') }}</small>
+                                @endif
                             </div>
                         </div>
                         <p class="mt-4 text-lg text-gray-900 dark:text-gray-100">{{ $post->message}}</p>

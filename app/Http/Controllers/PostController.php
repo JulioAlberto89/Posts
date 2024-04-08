@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
+use LaravelLang\Publisher\Processors\Update;
 
 class PostController extends Controller
 {
@@ -82,7 +83,13 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $validated = $request->validate([
+            'message'=> ['required', 'min:3', 'max:1000'],
+        ]);
+
+        $post ->update($validated);
+
+        return to_route('posts.index')->with('status',__('Post updated succesfully!'));
     }
 
     /**

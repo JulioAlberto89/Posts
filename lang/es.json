@@ -256,5 +256,8 @@
     "Post message": "Postear",
     "Post created successfully!" : "¡Post creado correctamente!",
     "Edit Posts" : "Editar Posts",
-    "Edit Post" : "Editar Post"
+    "Edit Post" : "Editar Post",
+    "Post updated succesfully!" : "Post actualizado exitosamente!",
+    "Edited" : "Editado",
+    "edited" : "editado"
 }

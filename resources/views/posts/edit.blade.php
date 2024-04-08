@@ -9,8 +9,9 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <form action="#" method="POST">
+                    <form action="{{route('posts.update', $post)}}" method="POST">
                         @csrf
+                        @method('PUT')
                         <textarea class="bg-transparent border border-gray-300 @error('message')
                             border-red-600
                         @enderror rounded-lg p-4 w-full
