@@ -73,6 +73,11 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+
+        if(auth()->user()->id !== $post->user_id){
+            abort(403);
+        }
+
         return view('posts.edit', [
             'post' => $post
         ]);
@@ -83,6 +88,10 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        if(auth()->user()->id !== $post->user_id){
+            abort(403);
+        }
+
         $validated = $request->validate([
             'message'=> ['required', 'min:3', 'max:1000'],
         ]);
